@@ -1,3 +1,37 @@
-﻿<h1>Liste des articles</h1>
+﻿@*
+Typer l'objet Model
+Rendre le model obligatoire (dans le controller on pourra pas faire return View())
+*@
+
+@model ArticlesViewModel
+
+<h1>Liste des articles</h1>
 
 <i>TODO : mettre la liste des articles</i>
+
+<table class="table">
+    @foreach (var article in Model.Articles)
+    {
+        if (article.Available)
+        {
+            <tr>
+                <td>
+                    @article.Id
+                </td>
+                <td>@article.Title</td>
+                <td>@article.Content</td>
+            </tr>
+
+
+        }
+        else
+        {
+            <tr class="bg-secondary text-light">
+                <td>@article.Id</td>
+                <td colspan="2" class="text-center">
+                    <i>Article indisponible</i>
+                </td>
+            </tr>
+        }
+    }
+</table>
