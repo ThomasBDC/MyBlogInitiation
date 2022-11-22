@@ -1,7 +1,9 @@
-global using MyBlogInitiation.ViewModels;
+﻿global using MyBlogInitiation.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using MyBlogInitiation.Models;
 using MyBlogInitiation.Repository.Context;
+using Microsoft.Extensions.DependencyInjection;
+using MyBlogInitiation.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +15,8 @@ builder.Services.AddDbContext<DbBlogContext>(options =>
   options.UseSqlServer(builder.Configuration.GetConnectionString("BlogDbContext")));
 
 var mvcBuilder = builder.Services.AddRazorPages();
+builder.Services.AddDbContext<MyBlogInitiationContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MyBlogInitiationContext") ?? throw new InvalidOperationException("Connection string 'MyBlogInitiationContext' not found.")));
 
 if (builder.Environment.IsDevelopment())
 {
