@@ -1,30 +1,44 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using MyBlogInitiation.Mocks;
 using MyBlogInitiation.Models;
-using MyBlogInitiation.Repository.Context;
+using MyBlogInitiation.Repository.DAL;
 
 namespace MyBlogInitiation.Controllers
 {
     public class ArticlesController : Controller
     {
-        private readonly DbBlogContext _dbBlogContext;
-        public ArticlesController(DbBlogContext dbBlogContext)
+        private readonly ArticlesPublicDAL _articlesPublicRepository;
+        public ArticlesController(ArticlesPublicDAL articlesPublicRepository)
         {
-            _dbBlogContext = dbBlogContext;
+            _articlesPublicRepository = articlesPublicRepository;
         }
 
         public async Task<IActionResult> Index()
         {
-            //Créer une liste d'article EN DUR
             var vm = new ArticlesViewModel
             {
-                Articles = await _dbBlogContext.Articles.ToListAsync()
+                Articles = await _articlesPublicRepository.GetAllArticles()
             };
 
             return View(vm);
         }
 
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var articleModel = await _articlesPublicRepository.GetArticle(id.Value);
+
+            if (articleModel == null || !articleModel.Available)
+            {
+                return NotFound();
+            }
+
+            return View(articleModel);
+        }
 
     }
 }
