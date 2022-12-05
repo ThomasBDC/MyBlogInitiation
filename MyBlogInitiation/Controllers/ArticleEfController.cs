@@ -7,6 +7,12 @@ namespace MyBlogInitiation.Controllers
 {
     public class ArticleEfController : Controller
     {
+        /**
+            Créer la DAL dans le projet Repository
+            Paramétrer l'injection dans program.cs (addtranscient)
+            Injecter la dal ici (dans le constructeur)
+            Enlever toutes les occurences ici à _context, en les remplaçant par des appels au repository
+         */
         private readonly DbBlogContext _context;
 
         public ArticleEfController(DbBlogContext context)
