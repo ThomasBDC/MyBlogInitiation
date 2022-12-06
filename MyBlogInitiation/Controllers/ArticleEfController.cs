@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyBlogInitiation.Models;
 using MyBlogInitiation.Repository.Context;
 
 namespace MyBlogInitiation.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class ArticleEfController : Controller
     {
         /**

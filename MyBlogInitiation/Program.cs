@@ -15,6 +15,7 @@ builder.Services.AddDbContext<DbBlogContext>(options =>
   options.UseSqlServer(builder.Configuration.GetConnectionString("BlogDbContext")));
 
 builder.Services.AddDefaultIdentity<MyBlogInitiationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<DbBlogContext>();
 
 
